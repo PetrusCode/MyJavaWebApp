@@ -1,31 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ page import="java.sql.*" %>
+    <%@ page import="com.webapp.configuration.DatabaseConfiguration"%>
+    <%@ page import="com.webapp.singleton.SingletonProperties"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 
-	<style>
-		div
-		{
-			display: flex;
-			width: 80%;
-			flex-direcction: colunm;
-			border: 1px solid black;
-			background-color:rgba(230, 230,230, 0.6);
-		}
-		div form
-		{
-			margin: 2%;
-			
-		}
-		form input, form label
-		{
-			margin: 1%;
-		}
-	</style>
+	
 </head>
 <body>
 	HELLO WORLD
@@ -44,16 +28,6 @@
   %>
   
   
-  	<div>
-	  	<form method="post" action="createGuest.jsp">
-			<label>Nombre:</label> <input type="text" name="first_name"/><br/>
-			<label>Apellido:</label> <input type="text" name="last_name"/><br/>
-			<label>Email:</label> <input type="text" name="email"/><br/>
-			
-			<input type="submit" value="Enviar">
-		</form>
-	</div>
-	
 	
   <%
   		try{
@@ -62,11 +36,24 @@
   			Connection conn=DriverManager.getConnection("jdbc:mysql://us-cdbr-east-03.cleardb.com/heroku_89cbfadb409a381",
   					"b19da8a68c5523", "ea53b615");
   			out.write("Conected");
+  			out.write("<br/>");
+  			String enviromentVar  = System.getenv("Entorno");
+  			out.write("The eviroment is: " + " " + enviromentVar);
   			
+  			out.write("<br/>");
+  			DatabaseConfiguration dc = new DatabaseConfiguration();
+  			out.write(dc.getPropValues(enviromentVar));
+  			
+  			SingletonProperties sp=SingletonProperties.getInstancia();
+  			out.write(sp.getPropiedad( "server"));
   		}catch(SQLException e){
   			out.println("SQL Exception caught: " + e.getMessage());
   		}
   %>
+  <br/>
+  <a href="<%=response.encodeUrl(request.getContextPath() + "/addGuest.jsp") %>">Add Guest</a>
 	
+	<br/>
+	<a href="<%=response.encodeUrl(request.getContextPath() + "/showGuest.jsp") %>">Show Guest</a>
 </body>
 </html>
