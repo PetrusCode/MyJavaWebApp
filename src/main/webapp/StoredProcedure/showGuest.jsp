@@ -26,11 +26,11 @@
 				"b19da8a68c5523", "ea53b615");
 		out.write("conected!");
 		
-		String query = "SELECT * FROM myguest";
+		CallableStatement callableStatement = conn.prepareCall(("{call getAllGuest}"));
+		callableStatement.execute();
 		
-		Statement st = conn.createStatement();
+		final ResultSet resultSet = callableStatement.getResultSet();
 		
-		ResultSet resultSet = st.executeQuery(query);
 		
 		while(resultSet.next())
 		{	
@@ -47,7 +47,7 @@
 <%   
 		}
 		resultSet.close();
-		st.close();
+		callableStatement.close();
 		conn.close();
 			
 	}catch(Exception e){

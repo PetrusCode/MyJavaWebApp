@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+//Forma basica de conexion mediante properties
 public class DatabaseConfiguration {
 
 	String result = "";

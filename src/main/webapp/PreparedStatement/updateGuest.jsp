@@ -38,10 +38,16 @@
 		out.write("conected!");
 		
 		Statement st = conn.createStatement();
+			
+		CallableStatement callableStatement = conn.prepareCall(("{call updateGuest(?)}"));
+		callableStatement.setString(1, id);
+		callableStatement.execute();
 		
-		st.executeUpdate("UPDATE myguest SET firstname='"+first_name+"', lastname='"+last_name+"', email='"+email+"' WHERE id="+id);
-		conn.close();
-		response.sendRedirect(request.getContextPath() + "/showGuest.jsp");
+		ResultSet resultSet = callableStatement.getResultSet();
+		
+		while(resultSet.next()){
+			
+		}
 		
 	}catch(Exception e){
 		System.err.println("Got an Exception");
